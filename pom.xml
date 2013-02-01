@@ -29,6 +29,19 @@
                <target>1.6</target>
             </configuration>
          </plugin>
+         <plugin>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+               <archive>
+                  <manifest>
+                     <addClasspath>true</addClasspath>
+                     <classpathPrefix>lib</classpathPrefix>
+                     <classpathLayoutType>repository</classpathLayoutType>
+                     <mainClass>org.jboss.beach.inquisitor.Inquisitor</mainClass>
+                  </manifest>
+               </archive>
+            </configuration>
+         </plugin>
       </plugins>
    </build>
 

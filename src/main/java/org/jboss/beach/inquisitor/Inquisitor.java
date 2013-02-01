@@ -29,14 +29,24 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * The inquisitor will interrogate at a location to find victims to interrogate.
+ *
  * @author <a href="mailto:cdewolf@redhat.com">Carlo de Wolf</a>
  */
 public class Inquisitor {
     // use scanners to find classes
     private final DirectoryScanner directoryScanner = new DirectoryScanner(this);
     private final JarScanner jarScanner = new JarScanner(this);
+
+    private List<Interrogation> interrogations = new CopyOnWriteArrayList<Interrogation>();
+
+    public List<Interrogation> getInterrogations() {
+        return interrogations;
+    }
 
     public void inquire(final URL codeSourceLocation) throws IOException {
         final File target = new File(uri(codeSourceLocation));
@@ -48,12 +58,9 @@ public class Inquisitor {
             throw new RuntimeException("NYI " + codeSourceLocation);
     }
 
-    public void inquire(final URL codeSourceLocation, final CtClass ctClass) {
-        try {
-            ctClass.getDeclaredMethod("finalize");
-            System.out.println(ctClass.getName() + " in " + codeSourceLocation);
-        } catch (NotFoundException e) {
-            // ignore
+    public void interrogate(final URL codeSourceLocation, final CtClass ctClass) {
+        for (final Interrogation interrogation : interrogations) {
+            interrogation.interrogate(this, codeSourceLocation, ctClass);
         }
     }
 
@@ -64,6 +71,17 @@ public class Inquisitor {
     public static void main(final String[] args) throws IOException {
         final URL base = new URL(args[0]);
         final Inquisitor inquisitor = new Inquisitor();
+        inquisitor.getInterrogations().add(new Interrogation() {
+            @Override
+            public void interrogate(final Inquisitor inquisitor, final URL location, final CtClass ctClass) {
+                try {
+                    ctClass.getDeclaredMethod("finalize");
+                    System.out.println(ctClass.getName() + " in " + location);
+                } catch (NotFoundException e) {
+                    // ignore
+                }
+            }
+        });
         inquisitor.inquire(base);
     }
 

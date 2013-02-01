@@ -181,6 +181,6 @@ abstract class AbstractScanner<T, E> {
     void scanClass(final URL codeSourceLocation, final InputStream in) throws IOException {
         final ClassPool pool = new ClassPool();
         CtClass ctClass = pool.makeClass(in);
-        inquisitor.inquire(codeSourceLocation, ctClass);
+        inquisitor.interrogate(codeSourceLocation, ctClass);
     }
 }

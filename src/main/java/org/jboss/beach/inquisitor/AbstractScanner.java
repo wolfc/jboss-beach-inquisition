@@ -50,15 +50,23 @@ abstract class AbstractScanner<T, E> {
             return true;
         if (name.endsWith(".cert"))
             return true;
+        if (name.endsWith(".cfg"))
+            return true;
         if (name.endsWith(".conf"))
             return true;
         if (name.endsWith(".css"))
             return true;
+        if (name.endsWith(".dat"))
+            return true;
         if (name.endsWith(".ddl"))
+            return true;
+        if (name.endsWith(".dll"))
             return true;
         if (name.endsWith(".dtd"))
             return true;
         if (name.endsWith(".ent"))
+            return true;
+        if (name.endsWith(".exe"))
             return true;
         if (name.endsWith(".gif"))
             return true;
@@ -100,6 +108,8 @@ abstract class AbstractScanner<T, E> {
             return true;
         if (name.endsWith(".properties"))
             return true;
+        if (name.endsWith(".py"))
+            return true;
         if (name.endsWith(".rej"))
             return true;
         if (name.endsWith(".res"))
@@ -140,6 +150,8 @@ abstract class AbstractScanner<T, E> {
             return true;
         if (name.endsWith(".xhtml"))
             return true;
+        if (name.endsWith(".xjb"))
+            return true;
         if (name.endsWith(".xml"))
             return true;
         if (name.endsWith(".xsd"))
@@ -160,9 +172,13 @@ abstract class AbstractScanner<T, E> {
             return true;
         if (name.endsWith("KILL_ME")) // TODO: should not be encountered
             return true;
+        if (name.endsWith("packageinfo"))
+            return true;
         if (name.endsWith("README"))
             return true;
 
+        if (name.startsWith("org/joda/time/tz/data"))
+            return true;
         if (name.startsWith("LGPL"))
             return true;
         if (name.startsWith("LICENSE"))
